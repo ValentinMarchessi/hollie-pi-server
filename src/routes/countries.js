@@ -47,16 +47,11 @@ router.get('/', async function (req, res) {
         }
         if (page) {
             let options = {
-                offset: page > 1 ? 9 + 10 * (page - 1) : 0,
-                limit: page > 1 ? 10 : 9,
+                offset: 10 * (page - 1),
+                limit: 10,
             };
 
             if (orderBy) options = { ...options, order: [[orderBy, direction ? direction : "DESC"]] };
-
-            /*
-                Si filterValue tiene espacios en la url estos son reemplazados por %20, esto corrige los espacios
-                para poder hacer el request a la base de datos
-            */
             
             if (filter === 'Continent') options = {
                 ...options,
@@ -83,8 +78,8 @@ router.get('/', async function (req, res) {
     }
     else try { 
         country_array = await Country.findAll({
-            attributes: ['name']
-        }).then(countries => countries.map(country => country.name));
+            attributes: ['name','id']
+        });
         country_array.length ? res.status(200).json(country_array) : res.sendStatus(400);
     } catch (error) {
         console.error(error);
