@@ -3,14 +3,14 @@ const { Sequelize } = require('sequelize');
 const fs = require('fs');
 const path = require('path');
 const {
-  DB_URL
+  DATABASE_URL
 } = process.env;
 
 console.log('Connecting sequelize to postgres...');
 
-const sequelize = new Sequelize(`${DB_URL}`, {
-  logging: false, // set to console.log to see the raw SQL queries
-  native: false, // lets Sequelize know we can use pg-native for ~30% more speed
+const sequelize = new Sequelize(`${DATABASE_URL}`, {
+	logging: false, // set to console.log to see the raw SQL queries
+	native: false, // lets Sequelize know we can use pg-native for ~30% more speed
 });
 const basename = path.basename(__filename);
 
